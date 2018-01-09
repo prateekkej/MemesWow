@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "686006509643",
+    "firebase_url": "https://memeswow-768bf.firebaseio.com",
+    "project_id": "memeswow-768bf",
+    "storage_bucket": "memeswow-768bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686006509643:android:1d58015c1504a316",
+        "android_client_info": {
+          "package_name": "com.memeswow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686006509643-d4tmihjfnuq6kqhb8taqod6agmht3clk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memeswow",
+            "certificate_hash": "5009efb2eb2c1b2b724dd9eacfb380897cc4a575"
+          }
+        },
+        {
+          "client_id": "686006509643-j4sf8eijr580i7n6mbcbbkh1tiarltcd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD92LfUZDA6ZwhfpEkn0Q_nYcfiLhHuNJI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686006509643-j4sf8eijr580i7n6mbcbbkh1tiarltcd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
