@@ -41,11 +41,11 @@ import static com.memeswow.Adapters.BasicFunctions.createToast;
 import static com.memeswow.Adapters.BasicFunctions.recieveSelectedImage;
 
 public class EditProfileActivity extends AppCompatActivity implements View.OnClickListener {
-ImageView userImage;
-EditText name,phone,about;
-Button deleteUserButton,changePasswordButton;
-UserSkeleton myProfile;
-FirebaseFirestore databaseReference= FirebaseFirestore.getInstance();
+    ImageView userImage;
+    EditText name,phone,about;
+    Button deleteUserButton,changePasswordButton;
+    UserSkeleton myProfile;
+    FirebaseFirestore databaseReference= FirebaseFirestore.getInstance();
     private StorageReference profileImageReference= FirebaseStorage.getInstance().getReference("/users_profile_images");
     private final int IMAGE_PICK_REQUEST=1;
     private final int IMAGE_CROP_REQUEST=2;
@@ -112,8 +112,10 @@ FirebaseFirestore databaseReference= FirebaseFirestore.getInstance();
             name.setText(myProfile.getFname());
             about.setText(myProfile.getAbout());
             phone.setText(myProfile.getPhone());
-            Glide.with(this).load(myProfile.getImgURL()).apply(RequestOptions.circleCropTransform()).into(userImage);
-        }
+            if(!myProfile.getImgURL().isEmpty())
+                Glide.with(this).load(myProfile.getImgURL())
+                        .apply(new RequestOptions().circleCrop())
+                        .into(userImage);        }
 
     }
 
@@ -121,8 +123,9 @@ FirebaseFirestore databaseReference= FirebaseFirestore.getInstance();
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==IMAGE_PICK_REQUEST){
-            startActivityForResult(recieveSelectedImage(data),IMAGE_CROP_REQUEST);
-            }
+            Intent i=recieveSelectedImage(data);
+            if(i!=null){
+                startActivityForResult(i,IMAGE_CROP_REQUEST);}            }
             if(requestCode==IMAGE_CROP_REQUEST){
             try {
                 final Bitmap myImage = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());

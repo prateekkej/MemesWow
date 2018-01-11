@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ScaleGestureDetectorCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnDoubleTapListener;
@@ -14,19 +15,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memeswow.R;
+
+import java.util.List;
 
 /**
  * Created by Prateek on 1/10/2018.
  */
 
-public class PostsAdapter extends BaseAdapter implements OnDoubleTapListener,GestureDetector.OnGestureListener {
+public class PostsAdapter extends RecyclerView.Adapter<MyPostViewHolder>    implements OnDoubleTapListener,GestureDetector.OnGestureListener {
  private Context ct;
  private int doubleTapPointer=-1;
- private ImageView imageView;
- private View tempViewForDoubleTap;
+    public ImageView like,comment,share,meme;
+    TextView uploadedBy;
  private GestureDetectorCompat gestureDetector;
     public PostsAdapter(Context ct){
         super();
@@ -35,40 +39,21 @@ public class PostsAdapter extends BaseAdapter implements OnDoubleTapListener,Ges
 
     }
     @Override
-    public int getCount() {
+    public MyPostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(ct).inflate(R.layout.feed_post_layout,parent,false);
+        return new MyPostViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(MyPostViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
         return 5;
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
-        final View v;
-        if(view!=null){
-            v=view;
-        }else{            v = LayoutInflater.from(ct).inflate(R.layout.feed_post_layout,viewGroup,false);
-        }
-            imageView= v.findViewById(R.id.postImage);
-            imageView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    doubleTapPointer=i;
-                    tempViewForDoubleTap=v;
-                    gestureDetector.onTouchEvent(motionEvent);
-
-                    return true;
-                }
-            });
-            return v;
-            }
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
@@ -78,7 +63,6 @@ public class PostsAdapter extends BaseAdapter implements OnDoubleTapListener,Ges
     @Override
     public boolean onDoubleTap(MotionEvent motionEvent) {
         Log.v("liked",String.valueOf(doubleTapPointer));
-        ImageView like=tempViewForDoubleTap.findViewById(R.id.like);
         like.setImageTintList(ColorStateList.valueOf(Color.RED));
         doubleTapPointer=-1;
         return true;
@@ -120,3 +104,16 @@ public class PostsAdapter extends BaseAdapter implements OnDoubleTapListener,Ges
     }
 }
 
+class MyPostViewHolder extends RecyclerView.ViewHolder{
+public ImageView like,comment,share,meme;
+TextView uploadedBy;
+
+    public MyPostViewHolder(View itemView) {
+        super(itemView);
+        like=itemView.findViewById(R.id.like);
+        comment= itemView.findViewById(R.id.comment);
+        share= itemView.findViewById(R.id.share);
+        meme= itemView.findViewById(R.id.postImage);
+        uploadedBy=itemView.findViewById(R.id.uploadedby);
+    }
+}

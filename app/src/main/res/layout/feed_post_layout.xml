@@ -14,10 +14,12 @@
         <ImageView
             android:id="@+id/postImage"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/ll"
             android:layout_alignParentTop="true"
             android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:cropToPadding="false"
             android:maxHeight="400dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/dummy2" />
@@ -65,7 +67,7 @@
                 android:text="Uploader-" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/uploadedby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

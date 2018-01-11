@@ -1,6 +1,7 @@
 package com.memeswow.Adapters;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +11,29 @@ import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.memeswow.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MediaGridAdapter extends BaseAdapter {
+public class MediaGridAdapter extends RecyclerView.Adapter<MyPhotosViewHolder> {
     Context ct;
-    int[] images;
+    public ArrayList<PostSkeleton> postSkeletons;
     public MediaGridAdapter(Context context){
         ct=context;
     }
+
     @Override
-    public int getCount() {
-        return 16;
+    public MyPhotosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v= LayoutInflater.from(ct).inflate(R.layout.my_photo_collection,parent,false);
+        return new MyPhotosViewHolder(v);
     }
 
     @Override
-    public Object getItem(int i) {
-        return null;
+    public void onBindViewHolder(MyPhotosViewHolder holder, int position) {
+        if(postSkeletons!=null)
+Glide.with(ct).load(postSkeletons.get(position).getImgURL()).into(holder.imageView);
     }
 
     @Override
@@ -36,18 +42,17 @@ public class MediaGridAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        ImageView img;
-        if(view==null) {
-         img = new ImageView(ct);
-         img.setImageResource(R.drawable.dummy);
-            img.setScaleX(1f);
-            img.setScaleY(1f);
-            img.setPadding(8,8,8,8);
-     }else{
-         img=(ImageView) view;
+    public int getItemCount() {
+        if(postSkeletons!=null)return postSkeletons.size();
+        return 0;
+    }
+}
+class MyPhotosViewHolder extends RecyclerView.ViewHolder{
 
-     }
-     return img;
+ImageView imageView;
+    public MyPhotosViewHolder(View itemView) {
+        super(itemView);
+        imageView=itemView.findViewById(R.id.postImage);
+
     }
 }
