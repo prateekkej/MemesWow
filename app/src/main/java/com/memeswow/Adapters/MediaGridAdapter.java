@@ -1,4 +1,4 @@
-package com.memeswow;
+package com.memeswow.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import com.memeswow.R;
 
 import java.util.ArrayList;
 
