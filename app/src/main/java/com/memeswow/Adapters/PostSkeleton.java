@@ -9,6 +9,20 @@ import java.util.HashMap;
 
 public class PostSkeleton {
     private String id;
+    private long timestamp;
+    private String posterID;
+    private String posterName;
+    private int likes;
+    private String imgURL;
+    private HashMap<String,Comment> comments;
+
+    public String getPosterName() {
+        return posterName;
+    }
+
+    public void setPosterName(String posterName) {
+        this.posterName = posterName;
+    }
 
     public long getTimestamp() {
         return timestamp;
@@ -18,7 +32,6 @@ public class PostSkeleton {
         this.timestamp = timestamp;
     }
 
-    private long timestamp;
     public String getPosterID() {
         return posterID;
     }
@@ -26,9 +39,6 @@ public class PostSkeleton {
     public void setPosterID(String posterID) {
         this.posterID = posterID;
     }
-
-    private String posterID;
-    private int likes;
 
     public String getImgURL() {
         return imgURL;
@@ -38,7 +48,6 @@ public class PostSkeleton {
         this.imgURL = imgURL;
     }
 
-    private String imgURL;
     public HashMap<String, Comment> getComments() {
         return comments;
     }
@@ -46,8 +55,6 @@ public class PostSkeleton {
     public void setComments(HashMap<String, Comment> comments) {
         this.comments = comments;
     }
-
-    private HashMap<String,Comment> comments;
 
     public String getId() {
         return id;
@@ -66,14 +73,58 @@ public class PostSkeleton {
     }
 
 public PostSkeleton()
-{
+{posterName="";
+this.timestamp=0;
+this.posterID="";
     id="";
     likes=0;
     comments= new HashMap<>();
 
 }}
 class Comment{
+    private String commentID;
     private String comment,commenterName,commenterUID;
+
+    public String getCommentID() {
+        return commentID;
+    }
+
+    public void setCommentID(String commentID) {
+        this.commentID = commentID;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getCommenterName() {
+        return commenterName;
+    }
+
+    public void setCommenterName(String commenterName) {
+        this.commenterName = commenterName;
+    }
+
+    public String getCommenterUID() {
+        return commenterUID;
+    }
+
+    public void setCommenterUID(String commenterUID) {
+        this.commenterUID = commenterUID;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     private long timestamp;
     public Comment(){
         comment="";

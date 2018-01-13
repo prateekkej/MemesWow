@@ -112,7 +112,8 @@ public class EditProfileActivity extends AppCompatActivity implements View.OnCli
             name.setText(myProfile.getFname());
             about.setText(myProfile.getAbout());
             phone.setText(myProfile.getPhone());
-            if(!myProfile.getImgURL().isEmpty())
+            if(myProfile.getImgURL()!=null)
+                if(!myProfile.getImgURL().isEmpty())
                 Glide.with(this).load(myProfile.getImgURL())
                         .apply(new RequestOptions().circleCrop())
                         .into(userImage);        }

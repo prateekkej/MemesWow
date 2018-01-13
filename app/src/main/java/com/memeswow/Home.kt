@@ -1,5 +1,6 @@
 package com.memeswow
 
+import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -43,6 +44,7 @@ class Home : AppCompatActivity() {
     private val IMAGE_CROP_REQUEST=2
     private lateinit var myPostsList:ArrayList<PostSkeleton>
     private lateinit var myProfile:UserSkeleton
+    private lateinit var a:ProgressDialog
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_home)
@@ -51,7 +53,11 @@ class Home : AppCompatActivity() {
             clicklisteners()
             myPostsList= ArrayList()
             mediaGridAdapter= MediaGridAdapter(this)
-
+            a=ProgressDialog(this)
+            a.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+            a.setTitle("Loading")
+            a.setCancelable(false)
+            a.setMessage("Please wait a connection is being made.")
         }
 
         private fun clicklisteners(){
@@ -85,13 +91,14 @@ class Home : AppCompatActivity() {
             if(requestCode==IMAGE_PICK_REQUEST){
                 var i=recieveSelectedImage(data)
                 if(i==null){
-                           startActivity(Intent(this,NewMemeActivity().javaClass));
+                           startActivity(Intent(this,NewMemeActivity().javaClass))
                 }else{
                     AlertDialog.Builder(this).setTitle("Do you want to crop the image?")
                         .setPositiveButton("Yes!",({dialogInterface: DialogInterface?, t: Int -> kotlin.run {startActivityForResult(i,IMAGE_CROP_REQUEST)  } }))
                         .setNegativeButton("No.Use as it is",{dialogInterface: DialogInterface?, i: Int -> kotlin.run{
                             val i= Intent(this,NewMemeActivity().javaClass)
                             i.putExtra("imageURI",data?.data.toString())
+                            i.putExtra("myProfile",myProfile)
                             startActivity(i)
 
                         } }).show()
@@ -100,6 +107,7 @@ class Home : AppCompatActivity() {
                 val myperfectMeme=data?.data
                 if(myperfectMeme!=null){
                     val i= Intent(this,NewMemeActivity().javaClass)
+                    i.putExtra("myProfile",myProfile)
                     i.putExtra("imageURI",myperfectMeme.toString())
                     startActivity(i)
                 }
@@ -108,14 +116,18 @@ class Home : AppCompatActivity() {
 
         override fun onResume() {
             super.onResume()
+            a.show()
             var myDocument=dataBaseReference.collection("users").document(firebaseAuth?.uid.toString())
             myDocument.get().addOnSuccessListener { documentSnapshot: DocumentSnapshot? ->kotlin.run{
                 if(documentSnapshot!!.exists()){
+                    if(a.isShowing)
+                        a.dismiss()
                     myProfile=documentSnapshot.toObject(UserSkeleton().javaClass)
                     name.text=myProfile.fname
                     about.text= myProfile.about
-                    if(!myProfile.imgURL.isEmpty())
-                    Glide.with(this).load(myProfile.imgURL)
+                    if(myProfile.imgURL!=null)
+                        if(!myProfile.imgURL.isEmpty())
+                            Glide.with(baseContext).load(myProfile.imgURL)
                             .apply(RequestOptions().circleCrop())
                             .into(userImage)
 

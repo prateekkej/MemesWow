@@ -1,6 +1,7 @@
 package com.memeswow.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.memeswow.PostDetailsActivity;
 import com.memeswow.R;
 
 import java.util.ArrayList;
@@ -31,9 +33,19 @@ public class MediaGridAdapter extends RecyclerView.Adapter<MyPhotosViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyPhotosViewHolder holder, int position) {
+    public void onBindViewHolder(MyPhotosViewHolder holder, final int position) {
         if(postSkeletons!=null)
-Glide.with(ct).load(postSkeletons.get(position).getImgURL()).into(holder.imageView);
+                Glide.with(ct).load(postSkeletons.get(position).getImgURL()).into(holder.imageView);
+        holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent i=new Intent(ct.getApplicationContext(), PostDetailsActivity.class);
+                i.putExtra("imgURL",postSkeletons.get(position).getImgURL());
+                ct.startActivity(i);
+                return true;
+            }
+        });
+
     }
 
     @Override
